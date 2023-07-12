@@ -43,6 +43,7 @@ ul {
   border-radius: 8px;
   border: solid 1px lightgray;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  overflow: hidden;
 }
 
 ul:empty {
@@ -55,6 +56,10 @@ li {
   padding: 8px 16px 8px 16px;
   border-bottom: solid 1px lightgray;
   font-size: 16px;
+}
+
+li.sent {
+  background-color: #fff1cd;
 }
 
 li:last-child {
