@@ -1,10 +1,6 @@
-/* reset */
-* {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  line-height: 1.5;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 body,
 html,
@@ -13,24 +9,12 @@ main {
   height: 100%;
 }
 
-body {
-  font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", helvetica,
-    sans-serif;
-}
-
 main {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: min(800px, 95vw);
-  margin: 0 auto;
+  @apply flex flex-col flex-grow w-[min(800px,95vw)] mx-auto;
 }
 
 h1 {
-  margin: 1rem 0;
-  font-size: 1.8em;
-  font-weight: 500;
-  text-align: center;
+  @apply my-4 text-3xl font-semibold text-center;
 }
 
 main > div {
@@ -39,12 +23,8 @@ main > div {
 }
 
 ul {
-  flex-grow: 1;
-  margin: 8px;
-  border-radius: 8px;
-  border: solid 1px lightgray;
+  @apply flex-grow my-2 border border-gray-300 rounded-lg overflow-scroll;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
-  overflow: scroll;
 }
 
 ul:empty {
@@ -52,11 +32,7 @@ ul:empty {
 }
 
 li {
-  display: flex;
-  justify-content: flex-start;
-  padding: 8px 16px 8px 16px;
-  border-bottom: solid 1px lightgray;
-  font-size: 16px;
+  @apply flex flex-wrap sm:flex-nowrap p-3 gap-x-2 border-b border-gray-300 justify-start;
 }
 
 li.sent {
@@ -64,23 +40,23 @@ li.sent {
 }
 
 li span:nth-child(1) {
+  @apply basis-[40%] sm:basis-0;
   font-weight: bold;
-  margin-right: 4px;
   white-space: nowrap;
 }
 li span:nth-child(2) {
-  margin-right: 4px;
+  @apply order-last sm:-order-none;
   word-break: break-word;
 }
 li span:nth-child(3) {
+  @apply basis-[40%] sm:basis-0;
   color: #6c757d;
   margin-left: auto;
   white-space: nowrap;
 }
 
 form {
-  display: flex;
-  justify-content: center;
+  @apply flex flex-col sm:flex-row justify-center gap-2;
 }
 
 input[type="number"],
@@ -113,4 +89,8 @@ button:hover {
 input[type="submit"]:disabled,
 button:disabled {
   background-color: rgb(122, 160, 248);
+}
+
+a {
+  @apply text-blue-500 hover:underline;
 }
