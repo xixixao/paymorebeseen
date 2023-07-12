@@ -4,6 +4,7 @@ import { v } from "convex/values";
 export default defineSchema({
   payments: defineTable({
     text: v.string(),
+    amount: v.number(),
     // If present the payment has been initiated
     stripeId: v.optional(v.string()),
     // If present the payment has been fulfilled
@@ -11,5 +12,6 @@ export default defineSchema({
   }).index("stripeId", ["stripeId"]),
   messages: defineTable({
     text: v.string(),
+    amount: v.number(),
   }),
 });

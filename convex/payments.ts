@@ -13,8 +13,8 @@ export const getMessageId = query({
 });
 
 export const create = internalMutation(
-  async ({ db }, { text }: { text: string }) => {
-    return await db.insert("payments", { text });
+  async ({ db }, { text, amount }: { text: string; amount: number }) => {
+    return await db.insert("payments", { text, amount });
   }
 );
 
@@ -29,11 +29,15 @@ export const markPending = internalMutation(
 
 export const fulfill = internalMutation(
   async ({ db }, { stripeId }: { stripeId: string }) => {
-    const { _id: paymentId, text } = (await db
+    const {
+      _id: paymentId,
+      text,
+      amount,
+    } = (await db
       .query("payments")
       .withIndex("stripeId", (q) => q.eq("stripeId", stripeId))
       .unique())!;
-    const messageId = await db.insert("messages", { text });
+    const messageId = await db.insert("messages", { text, amount });
     await db.patch(paymentId, { messageId });
   }
 );

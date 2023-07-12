@@ -6,19 +6,23 @@ import Stripe from "stripe";
 import { internal } from "./_generated/api";
 
 export const pay = action({
-  args: { text: v.string() },
-  handler: async ({ runMutation }, { text }) => {
+  args: { text: v.string(), amount: v.string() },
+  handler: async ({ runMutation }, { text, amount }) => {
     const domain = process.env.HOSTING_URL ?? "http://localhost:5173";
     const stripe = new Stripe(process.env.STRIPE_KEY!, {
       apiVersion: "2022-11-15",
     });
-    const paymentId = await runMutation(internal.payments.create, { text });
+    const cents = Math.floor(parseFloat(amount) * 100);
+    const paymentId = await runMutation(internal.payments.create, {
+      text,
+      amount: cents,
+    });
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
           price_data: {
             currency: "USD",
-            unit_amount: 100,
+            unit_amount: cents,
             product_data: {
               name: "One message of your choosing",
             },

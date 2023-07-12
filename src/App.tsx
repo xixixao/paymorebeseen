@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import { useAction, useQuery } from "convex/react";
 import { api } from "../convex/_generated/api";
 import { Id } from "../convex/_generated/dataModel";
@@ -12,28 +12,39 @@ export default function App() {
   const messages = useQuery(api.messages.list) || [];
 
   const [newMessageText, setNewMessageText] = useState("");
+  const [amount, setAmount] = useState("1.00");
   const payAndSendMessage = useAction(api.stripe.pay);
+
+  const listRef = useRef<HTMLUListElement | null>(null);
+
+  useEffect(() => {
+    listRef.current!.scrollTop = 0;
+  }, [messages]);
 
   async function handleSendMessage(event: FormEvent) {
     event.preventDefault();
-    const paymentUrl = await payAndSendMessage({ text: newMessageText });
+    const paymentUrl = await payAndSendMessage({
+      text: newMessageText,
+      amount,
+    });
     window.location.href = paymentUrl!;
   }
   return (
     <main>
-      <h1>Convex Paid Chat</h1>
-      <ul>
-        {messages.map((message) => (
-          <li
-            key={message._id}
-            className={sentMessageId === message._id ? "sent" : ""}
-          >
-            <span>{message.text}</span>
-            <span>{new Date(message._creationTime).toLocaleTimeString()}</span>
-          </li>
-        ))}
-      </ul>
+      <h1>Pay More, Be Seen</h1>
       <form onSubmit={handleSendMessage}>
+        <div className="amountInput">
+          $
+          <input
+            type="number"
+            step="0.01"
+            placeholder="0.00"
+            min="0.00"
+            max="999999999.99"
+            value={amount}
+            onChange={(event) => setAmount(event.target.value)}
+          />
+        </div>
         <input
           value={newMessageText}
           onChange={(event) => setNewMessageText(event.target.value)}
@@ -41,10 +52,28 @@ export default function App() {
         />
         <input
           type="submit"
-          value="Pay $1 and send"
+          value={`Pay and be seen!`}
           disabled={!newMessageText}
         />
       </form>
+      <ul ref={listRef}>
+        {messages.map((message) => (
+          <li
+            key={message._id}
+            className={sentMessageId === message._id ? "sent" : ""}
+          >
+            <span>${message.amount / 100}</span>
+            <span>{message.text}</span>
+            <span>{new Date(message._creationTime).toLocaleTimeString()}</span>
+          </li>
+        ))}
+      </ul>
+      <div>
+        Built on{" "}
+        <a href="https://convex.dev/" target="_blank">
+          Convex
+        </a>
+      </div>
     </main>
   );
 }

@@ -6,21 +6,32 @@
   line-height: 1.5;
 }
 
+body,
+html,
+#root,
+main {
+  height: 100%;
+}
+
 body {
   font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", helvetica,
     sans-serif;
 }
 
 main {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding-top: 1em;
   padding-bottom: 1em;
   width: min(800px, 95vw);
   margin: 0 auto;
+  text-align: center;
 }
 
 h1 {
   text-align: center;
-  margin-bottom: 8px;
+  margin: 1rem 0;
   font-size: 1.8em;
   font-weight: 500;
 }
@@ -86,7 +97,9 @@ form {
   justify-content: center;
 }
 
+input[type="number"],
 input:not([type]) {
+  margin-left: 4px;
   padding: 6px 12px 6px 12px;
   color: rgb(33, 37, 41);
   border: solid 1px rgb(206, 212, 218);
@@ -103,6 +116,7 @@ button {
   border-radius: 8px;
   font-size: 16px;
   background-color: rgb(49, 108, 244);
+  cursor: pointer;
 }
 
 input[type="submit"]:hover,
