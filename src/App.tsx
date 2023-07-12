@@ -37,15 +37,19 @@ export default function App() {
           $
           <input
             type="number"
-            step="0.01"
+            step="0.10"
             placeholder="0.00"
-            min="0.00"
+            min="1.00"
             max="999999999.99"
             value={amount}
             onChange={(event) => setAmount(event.target.value)}
+            onBlur={() => {
+              setAmount(parseFloat(amount).toFixed(2));
+            }}
           />
         </div>
         <input
+          maxLength={100}
           value={newMessageText}
           onChange={(event) => setNewMessageText(event.target.value)}
           placeholder="Write a message…"
@@ -62,9 +66,12 @@ export default function App() {
             key={message._id}
             className={sentMessageId === message._id ? "sent" : ""}
           >
-            <span>${message.amount / 100}</span>
+            <span>${(message.amount / 100).toFixed(2)}</span>
             <span>{message.text}</span>
-            <span>{new Date(message._creationTime).toLocaleTimeString()}</span>
+            <span>
+              {new Date(message._creationTime).toLocaleDateString()}{" "}
+              {new Date(message._creationTime).toLocaleTimeString()}
+            </span>
           </li>
         ))}
       </ul>
@@ -72,6 +79,11 @@ export default function App() {
         Built on{" "}
         <a href="https://convex.dev/" target="_blank">
           Convex
+        </a>
+        {", "}
+        source on{" "}
+        <a href="https://github.com/" target="_blank">
+          Github
         </a>
       </div>
     </main>

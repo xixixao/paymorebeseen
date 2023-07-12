@@ -14,7 +14,7 @@ export const pay = action({
     });
     const cents = Math.floor(parseFloat(amount) * 100);
     const paymentId = await runMutation(internal.payments.create, {
-      text,
+      text: text.slice(0, 100),
       amount: cents,
     });
     const session = await stripe.checkout.sessions.create({

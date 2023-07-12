@@ -13,5 +13,5 @@ export default defineSchema({
   messages: defineTable({
     text: v.string(),
     amount: v.number(),
-  }),
+  }).index("amount", ["amount"]),
 });
