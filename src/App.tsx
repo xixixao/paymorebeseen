@@ -82,7 +82,7 @@ export default function App() {
         </a>
         {", "}
         source on{" "}
-        <a href="https://github.com/" target="_blank">
+        <a href="https://github.com/xixixao/paymorebeseen" target="_blank">
           Github
         </a>
       </div>

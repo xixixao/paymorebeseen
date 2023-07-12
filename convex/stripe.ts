@@ -23,6 +23,7 @@ export const pay = action({
           price_data: {
             currency: "USD",
             unit_amount: cents,
+            tax_behavior: "exclusive",
             product_data: {
               name: "One message of your choosing",
             },
