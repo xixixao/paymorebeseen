@@ -37,7 +37,7 @@ export default function App() {
           $
           <input
             type="number"
-            step="0.10"
+            step="0.01"
             placeholder="0.00"
             min="1.00"
             max="999999999.99"
