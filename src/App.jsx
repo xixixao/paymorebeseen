@@ -8,18 +8,14 @@ export default function App() {
   const [newMessageText, setNewMessageText] = useState("");
   const sendMessage = useMutation(api.messages.send);
 
-  const [name] = useState(() => "User " + Math.floor(Math.random() * 10000));
   async function handleSendMessage(event) {
     event.preventDefault();
-    await sendMessage({ body: newMessageText, author: name });
+    await sendMessage({ body: newMessageText });
     setNewMessageText("");
   }
   return (
     <main>
       <h1>Convex Paid Chat</h1>
-      <p className="badge">
-        <span>{name}</span>
-      </p>
       <ul>
         {messages.map((message) => (
           <li key={message._id.toString()}>
